@@ -7,12 +7,17 @@ import { AppComponent } from './app.component';
 
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-
-
+import { DropdownModule } from 'primeng/dropdown';
+import { DividerModule } from 'primeng/divider';
+import { HomeComponent } from './home/home.component';
+import { ChartModule } from 'primeng/chart';
+import { DockModule } from 'primeng/dock';
+import { ToolbarModule } from 'primeng/toolbar';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -20,8 +25,13 @@ import { ButtonModule } from 'primeng/button';
     BrowserAnimationsModule,
     CardModule,
     ButtonModule,
+    DropdownModule,
+    DividerModule,
+    ChartModule,
+    DockModule,
+    ToolbarModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
