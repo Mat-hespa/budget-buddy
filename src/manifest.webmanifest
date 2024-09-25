@@ -1,7 +1,7 @@
 {
   "name": "Budget Buddy",
   "short_name": "BudgetBuddy",
-  "theme_color": "#007bff",
+  "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "display": "standalone",
   "scope": "/",
