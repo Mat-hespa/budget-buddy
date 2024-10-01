@@ -1,4 +1,4 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -15,6 +15,12 @@ import { DockModule } from 'primeng/dock';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ProfileComponent } from './profile/profile.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { DialogModule } from 'primeng/dialog';
+
+
 
 @NgModule({
   declarations: [
@@ -33,6 +39,10 @@ import { ProfileComponent } from './profile/profile.component';
     ChartModule,
     DockModule,
     ToolbarModule,
+    InputTextModule,
+    FormsModule,
+    HttpClientModule,
+    DialogModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
@@ -42,5 +52,6 @@ import { ProfileComponent } from './profile/profile.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

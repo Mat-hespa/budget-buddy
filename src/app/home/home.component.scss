@@ -66,8 +66,8 @@
 }
 
 ::ng-deep p {
-  margin-top: 8px !important;
-  margin-bottom: 8px !important;
+  margin-top: 2px !important;
+  margin-bottom: 2px !important;
 }
 
 ::ng-deep .p-dropdown-label {
@@ -88,4 +88,52 @@
 .legend-text {
   font-size: 0.8rem;
   margin: 0;
+}
+
+.bank-account {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.balance-input {
+  width: 100px;
+  text-align: right;
+}
+
+.remove-button {
+  background: transparent;
+  border: none;
+  color: #ff4d4d;
+  cursor: pointer;
+}
+
+.add-account-button {
+  margin-top: 10px;
+}
+
+.bank-account {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.edit-button, .remove-button {
+  background: transparent;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.edit-button:hover, .remove-button:hover {
+  color: #ff4d4d;
+}
+
+.add-account-button {
+  margin-top: 10px;
 }

@@ -7,9 +7,43 @@
       <button pButton icon="pi pi-sign-out" class="logout-button" (click)="logout()"></button>
     </div>
   </div>
-
   <!-- Main Content -->
   <div class="content">
+    <div class="card flex justify-content-center mt-4">
+      <p-card [style]="{ width: '360px' }">
+        <div class="flex flex-column align-items-center">
+          <h2 style="margin-top: 0;">Contas Bancárias</h2>
+          <div *ngFor="let account of bankAccounts; let i = index" class="bank-account">
+            <i [class]="account.icon" style="font-size: 2rem; margin-right: 10px;"></i>
+            <p>{{ account.name }}</p>
+            <p>{{ account.balance | currency:'BRL' }}</p>
+            <button pButton icon="pi pi-pencil" class="edit-button" (click)="openEditAccountDialog(account, i)"></button>
+            <button pButton icon="pi pi-trash" class="remove-button" (click)="removeAccount(i)"></button>
+          </div>
+          <button *ngIf="bankAccounts.length < 5" pButton label="Adicionar Conta" icon="pi pi-plus" class="add-account-button" (click)="openAddAccountDialog()"></button>
+        </div>
+      </p-card>
+    </div>
+
+    <p-dialog header="Adicionar Conta" [(visible)]="isDialogVisible" [modal]="true" [closable]="false" [style]="{ width: '90%', maxWidth: '400px' }">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="bank">Banco</label>
+          <p-dropdown [options]="bankOptions" [(ngModel)]="dialogAccount.selectedBank" placeholder="Selecione um banco"></p-dropdown>
+        </div>
+        <div class="p-field">
+          <label for="balance">Saldo</label>
+          <input id="balance" type="number" [(ngModel)]="dialogAccount.balance" class="p-inputtext p-component" />
+        </div>
+      </div>
+      <p-footer>
+        <div class="flex justify-content-end">
+          <button pButton label="Salvar" icon="pi pi-check" (click)="saveAccount()"></button>
+          <button pButton label="Cancelar" icon="pi pi-times" class="ui-button-secondary" (click)="closeDialog()"></button>
+        </div>
+      </p-footer>
+    </p-dialog>
+    <!-- Existing Cards -->
     <div class="card flex justify-content-center mt-4">
       <p-card [style]="{ width: '360px'}">
         <div class="flex flex-column align-items-center">
@@ -40,7 +74,6 @@
         </ng-template>
       </p-card>
     </div>
-
     <div class="card flex justify-content-center mt-4">
       <p-card [style]="{ width: '360px'}">
         <div class="flex justify-content-center align-items-center">
@@ -60,3 +93,4 @@
       </p-card>
     </div>
   </div>
+</div>
