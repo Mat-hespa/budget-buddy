@@ -1,65 +1,91 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffffff; /* Branco */
+  color: #000000; /* Preto */
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  height: 60px; /* Defina a altura da navbar */
+}
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 360px;
+}
+
+.navbar-content i {
+  margin-right: 10px;
+}
+
+.navbar-content p {
+  flex-grow: 1;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.logout-button {
+  background: transparent;
+  border: none;
+  color: #000000; /* Preto */
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  color: #ff4d4d; /* Vermelho para hover */
+}
+
+.content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-top: 70px; /* Ajuste este valor para corresponder à altura da navbar */
+  padding-bottom: 70px; /* Ajuste este valor para corresponder à altura do footer */
+}
+
 ::ng-deep .p-card-content {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
+
 ::ng-deep .p-card-footer {
   padding-top: 0 !important;
 }
+
 ::ng-deep p {
   margin-top: 8px !important;
   margin-bottom: 8px !important;
 }
+
 ::ng-deep .p-dropdown-label {
   padding-right: 0 !important;
   text-align: center;
 }
+
 .hidden {
   visibility: hidden;
 }
+
 .legend-color-box {
   width: 15px;
   height: 15px;
   border-radius: 50%;
 }
+
 .legend-text {
   font-size: 0.8rem;
   margin: 0;
-}
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #ffffff;
-  padding: 5px 0;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-.footer-btn {
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-.footer-btn:hover {
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-  transform: translateY(-2px);
-}
-.footer-btn-middle {
-  position: relative;
-  top: -15px;
-  width: 60px;
-  height: 60px;
-  font-size: 1.5rem;
 }

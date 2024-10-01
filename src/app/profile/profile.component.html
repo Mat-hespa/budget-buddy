@@ -1,0 +1,40 @@
+<div class="profile-container">
+    <div class="profile-header">
+      <i class="pi pi-arrow-left" (click)="navigateBack()"></i>
+      <h2>Perfil</h2>
+    </div>
+  
+    <div class="profile-card">
+      <div class="profile-picture">
+        <img src="../../assets/sushimares.jpeg" alt="Profile Picture">
+      </div>
+      <h2>{{ user.name }}</h2>
+      <p>{{ user.email }}</p>
+    </div>
+  
+    <div class="profile-details">
+      <h3>Informações Pessoais</h3>
+      <div class="detail-item">
+        <i class="pi pi-phone"></i>
+        <p>{{ user.phone }}</p>
+      </div>
+      <div class="detail-item">
+        <i class="pi pi-map-marker"></i>
+        <p>{{ user.address }}</p>
+      </div>
+    </div>
+  
+    <div class="profile-settings">
+      <h3>Configurações</h3>
+      <div class="setting-item">
+        <i class="pi pi-cog"></i>
+        <p>Configurações da Conta</p>
+      </div>
+      <div class="setting-item">
+        <i class="pi pi-lock"></i>
+        <p>Alterar Senha</p>
+      </div>
+    </div>
+  
+    <button pButton label="Sair" icon="pi pi-sign-out" class="logout-button" (click)="logout()"></button>
+  </div>

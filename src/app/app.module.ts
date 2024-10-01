@@ -14,11 +14,13 @@ import { ChartModule } from 'primeng/chart';
 import { DockModule } from 'primeng/dock';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

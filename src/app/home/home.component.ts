@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
   isBalanceHidden = false;
   months: any[];
   selectedMonth: any;
+
+  user = {
+    name: 'John Doe',
+    email: 'john.doe@example.com'
+  };
 
   doughnutChartOptions = {
     plugins: {
@@ -36,7 +41,7 @@ export class HomeComponent {
     { title: 'Educação', value: 'R$ 200,00', color: '#4BC0C0' }
   ];
 
-  constructor() {
+  constructor(private router: Router) {
     this.months = [
       { label: 'Janeiro', value: 'Janeiro' },
       { label: 'Fevereiro', value: 'Fevereiro' },
@@ -56,5 +61,18 @@ export class HomeComponent {
   toggleBalanceVisibility() {
     this.isBalanceHidden = !this.isBalanceHidden;
   }
-}
 
+  navigateToProfile() {
+    this.router.navigate(['/profile']);
+  }
+
+  navigateToHome() {
+    this.router.navigate(['/']);
+  }
+
+  logout() {
+    // Implement logout logic here
+    console.log('User logged out');
+    this.router.navigate(['/login']);
+  }
+}

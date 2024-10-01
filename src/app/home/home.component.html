@@ -1,55 +1,62 @@
-<div class="card flex justify-content-center">
-  <p-card [style]="{ width: '360px'}">
-    <div class="flex flex-column align-items-center">
-      <p-dropdown [options]="months" placeholder="Selecione um mês" [style]="{ border: 'none', textAlign: 'center', padding: '0' }" [panelStyle]="{ fontWeight: 'bold' }"></p-dropdown>
-      <p style="margin-bottom: 0;">Saldo em contas</p>
-      <h1 style="margin: 10px;">{{ isBalanceHidden ? '****' : 'R$ 1.000,00' }}</h1>
-      <div class="flex justify-content-center" (click)="toggleBalanceVisibility()">
-        <i class="pi" [ngClass]="{'pi-eye': isBalanceHidden, 'pi-eye-slash': !isBalanceHidden}"></i>
-      </div>
+<div class="page-container">
+  <!-- Navbar Component -->
+  <div class="navbar">
+    <div class="navbar-content">
+      <i class="pi pi-user" style="font-size: 1.5rem;" (click)="navigateToProfile()"></i>
+      <p>{{ user.name }}</p>
+      <button pButton icon="pi pi-sign-out" class="logout-button" (click)="logout()"></button>
     </div>
-    <ng-template pTemplate="footer">
-      <div class="flex justify-content-between mt-1">
-        <div class="flex align-items-center">
-          <i class="pi pi-arrow-circle-up green-icon" style="font-size: 2.5rem;"></i>
-          <div class="ml-2" style="margin-top: 8px;">
-            <p>Receitas</p>
-            <p style="color: green;">R$ 500,00</p>
-          </div>
-        </div>
-        <div class="flex align-items-center">
-          <i class="pi pi-arrow-circle-down red-icon" style="font-size: 2.5rem;"></i>
-          <div class="ml-2" style="margin-top: 8px;">
-            <p>Despesas</p>
-            <p style="color: red;">R$ 300,00</p>
-          </div>
-        </div>
-      </div>
-    </ng-template>
-  </p-card>
-</div>
+  </div>
 
-<div class="card flex justify-content-center mt-4">
-  <p-card [style]="{ width: '360px'}">
-    <div class="flex justify-content-center align-items-center">
-      <div style="width: 50%; display: flex; justify-content: center;">
-        <p-chart type="doughnut" [data]="doughnutChartData" [options]="doughnutChartOptions" style="max-width: 150px;"></p-chart>
-      </div>
-      <div style="width: 50%; padding-left: 10px;">
-        <div *ngFor="let item of expenses" class="flex align-items-center mb-1 ml-5">
-          <div [style.background-color]="item.color" class="legend-color-box"></div>
-          <div class="ml-1">
-            <p class="legend-text">{{ item.title }}</p>
-            <p class="legend-text">{{ item.value }}</p>
+  <!-- Main Content -->
+  <div class="content">
+    <div class="card flex justify-content-center mt-4">
+      <p-card [style]="{ width: '360px'}">
+        <div class="flex flex-column align-items-center">
+          <p-dropdown [options]="months" placeholder="Selecione um mês" [style]="{ border: 'none', textAlign: 'center', padding: '0' }" [panelStyle]="{ fontWeight: 'bold' }"></p-dropdown>
+          <p style="margin-bottom: 0;">Saldo em contas</p>
+          <h1 style="margin: 10px;">{{ isBalanceHidden ? '****' : 'R$ 1.000,00' }}</h1>
+          <div class="flex justify-content-center" (click)="toggleBalanceVisibility()">
+            <i class="pi" [ngClass]="{'pi-eye': isBalanceHidden, 'pi-eye-slash': !isBalanceHidden}"></i>
           </div>
         </div>
-      </div>
+        <ng-template pTemplate="footer">
+          <div class="flex justify-content-between mt-1">
+            <div class="flex align-items-center">
+              <i class="pi pi-arrow-circle-up green-icon" style="font-size: 2.5rem;"></i>
+              <div class="ml-2" style="margin-top: 8px;">
+                <p>Receitas</p>
+                <p style="color: green;">R$ 500,00</p>
+              </div>
+            </div>
+            <div class="flex align-items-center">
+              <i class="pi pi-arrow-circle-down red-icon" style="font-size: 2.5rem;"></i>
+              <div class="ml-2" style="margin-top: 8px;">
+                <p>Despesas</p>
+                <p style="color: red;">R$ 300,00</p>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-card>
     </div>
-  </p-card>
-</div>
 
-<footer class="footer">
-  <button class="footer-btn"><i class="pi pi-home"></i></button>
-  <button class="footer-btn footer-btn-middle"><i class="pi pi-plus"></i></button>
-  <button class="footer-btn"><i class="pi pi-user"></i></button>
-</footer>
+    <div class="card flex justify-content-center mt-4">
+      <p-card [style]="{ width: '360px'}">
+        <div class="flex justify-content-center align-items-center">
+          <div style="width: 50%; display: flex; justify-content: center;">
+            <p-chart type="doughnut" [data]="doughnutChartData" [options]="doughnutChartOptions" style="max-width: 150px;"></p-chart>
+          </div>
+          <div style="width: 50%; padding-left: 10px;">
+            <div *ngFor="let item of expenses" class="flex align-items-center mb-1 ml-5">
+              <div [style.background-color]="item.color" class="legend-color-box"></div>
+              <div class="ml-1">
+                <p class="legend-text">{{ item.title }}</p>
+                <p class="legend-text">{{ item.value }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
