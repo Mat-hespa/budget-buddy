@@ -5,55 +5,37 @@
   overflow: hidden;
 }
 
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: #ffffff; /* Branco */
-  color: #000000; /* Preto */
-  padding: 10px 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  height: 60px; /* Defina a altura da navbar */
-}
-
-.navbar-content {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  max-width: 360px;
-}
-
-.navbar-content i {
-  margin-right: 10px;
-}
-
-.navbar-content p {
-  flex-grow: 1;
-  margin: 0;
-  font-size: 1.2rem;
-}
-
-.logout-button {
-  background: transparent;
-  border: none;
-  color: #000000; /* Preto */
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-.logout-button:hover {
-  color: #ff4d4d; /* Vermelho para hover */
-}
-
 .content {
   flex-grow: 1;
   overflow-y: auto;
-  padding-top: 70px; /* Ajuste este valor para corresponder à altura da navbar */
-  padding-bottom: 70px; /* Ajuste este valor para corresponder à altura do footer */
+  padding-bottom: 20px; /* Ajuste este valor conforme necessário */
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 10px;
+}
+
+.card-title {
+  text-align: left;
+  font-size: 1.5rem;
+  margin-left: 20px;
+}
+
+.card-title-spaced {
+  margin-top: 40px; /* Adicione um maior espaçamento entre o título e o card acima */
+}
+
+.user-profile {
+  /* Nada aqui para manter a posição relativa ao fluxo da página */
+}
+
+.profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 
 ::ng-deep .p-card-content {
@@ -87,7 +69,6 @@
 
 .legend-text {
   font-size: 0.8rem;
-  margin: 0;
 }
 
 .bank-account {
@@ -98,28 +79,25 @@
   margin-bottom: 10px;
 }
 
-.balance-input {
-  width: 100px;
-  text-align: right;
-}
-
-.remove-button {
-  background: transparent;
-  border: none;
-  color: #ff4d4d;
-  cursor: pointer;
-}
-
-.add-account-button {
-  margin-top: 10px;
-}
-
-.bank-account {
+.bank-account-info {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 100%;
-  margin-bottom: 10px;
+  flex-grow: 1;
+}
+
+.account-name {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.account-balance {
+  text-align: center;
+  flex-grow: 1;
+}
+
+.bank-account-actions {
+  display: flex;
+  align-items: center;
 }
 
 .edit-button, .remove-button {

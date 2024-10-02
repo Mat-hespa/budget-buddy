@@ -1,57 +1,20 @@
 <div class="page-container">
-  <!-- Navbar Component -->
-  <div class="navbar">
-    <div class="navbar-content">
-      <i class="pi pi-user" style="font-size: 1.5rem;" (click)="navigateToProfile()"></i>
-      <p>{{ user.name }}</p>
-      <button pButton icon="pi pi-sign-out" class="logout-button" (click)="logout()"></button>
-    </div>
-  </div>
   <!-- Main Content -->
   <div class="content">
-    <div class="card flex justify-content-center mt-4">
-      <p-card [style]="{ width: '360px' }">
-        <div class="flex flex-column align-items-center">
-          <h2 style="margin-top: 0;">Contas Bancárias</h2>
-          <div *ngFor="let account of bankAccounts; let i = index" class="bank-account">
-            <i [class]="account.icon" style="font-size: 2rem; margin-right: 10px;"></i>
-            <p>{{ account.name }}</p>
-            <p>{{ account.balance | currency:'BRL' }}</p>
-            <button pButton icon="pi pi-pencil" class="edit-button" (click)="openEditAccountDialog(account, i)"></button>
-            <button pButton icon="pi pi-trash" class="remove-button" (click)="removeAccount(i)"></button>
-          </div>
-          <button *ngIf="bankAccounts.length < 5" pButton label="Adicionar Conta" icon="pi pi-plus" class="add-account-button" (click)="openAddAccountDialog()"></button>
-        </div>
-      </p-card>
-    </div>
-
-    <p-dialog header="Adicionar Conta" [(visible)]="isDialogVisible" [modal]="true" [closable]="false" [style]="{ width: '90%', maxWidth: '400px' }">
-      <div class="p-fluid">
-        <div class="p-field">
-          <label for="bank">Banco</label>
-          <p-dropdown [options]="bankOptions" [(ngModel)]="dialogAccount.selectedBank" placeholder="Selecione um banco"></p-dropdown>
-        </div>
-        <div class="p-field">
-          <label for="balance">Saldo</label>
-          <input id="balance" type="number" [(ngModel)]="dialogAccount.balance" class="p-inputtext p-component" />
-        </div>
+    <!-- First -->
+    <div class="header-container">
+      <h2 class="card-title">Saldo em contas</h2>
+      <div class="user-profile" (click)="navigateToProfile()">
+        <img src="../../assets/sushimares.jpeg" alt="User Profile" class="profile-picture" />
       </div>
-      <p-footer>
-        <div class="flex justify-content-end">
-          <button pButton label="Salvar" icon="pi pi-check" (click)="saveAccount()"></button>
-          <button pButton label="Cancelar" icon="pi pi-times" class="ui-button-secondary" (click)="closeDialog()"></button>
-        </div>
-      </p-footer>
-    </p-dialog>
-    <!-- Existing Cards -->
-    <div class="card flex justify-content-center mt-4">
+    </div>
+    <div class="card flex justify-content-center">
       <p-card [style]="{ width: '360px'}">
         <div class="flex flex-column align-items-center">
-          <p-dropdown [options]="months" placeholder="Selecione um mês" [style]="{ border: 'none', textAlign: 'center', padding: '0' }" [panelStyle]="{ fontWeight: 'bold' }"></p-dropdown>
-          <p style="margin-bottom: 0;">Saldo em contas</p>
+          <p-dropdown [options]="months" placeholder="Mês" [style]="{ border: 'none', textAlign: 'center', padding: '0' }" [panelStyle]="{ fontWeight: 'bold' }"></p-dropdown>
           <h1 style="margin: 10px;">{{ isBalanceHidden ? '****' : 'R$ 1.000,00' }}</h1>
           <div class="flex justify-content-center" (click)="toggleBalanceVisibility()">
-            <i class="pi" [ngClass]="{'pi-eye': isBalanceHidden, 'pi-eye-slash': !isBalanceHidden}"></i>
+            <i class="pi" [ngClass]="{'pi-eye': isBalanceHidden, 'pi-eye-slash': !isBalanceHidden}" style="margin: 10px;"></i>
           </div>
         </div>
         <ng-template pTemplate="footer">
@@ -74,18 +37,44 @@
         </ng-template>
       </p-card>
     </div>
+
+    <!-- Second -->
+    <h2 class="card-title card-title-spaced">Contas Bancárias</h2>
+    <div class="card flex justify-content-center mt-4">
+      <p-card [style]="{ width: '360px' }">
+        <div class="flex flex-column align-items-center">
+          <div *ngFor="let account of bankAccounts; let i = index" class="bank-account">
+            <div class="bank-account-info">
+              <i [class]="account.icon" style="font-size: 2rem; margin-right: 10px;"></i>
+              <p class="account-name">{{ account.name }}</p>
+              <p class="account-balance">{{ account.balance | currency:'BRL' }}</p>
+            </div>
+            <div class="bank-account-actions">
+              <button pButton icon="pi pi-pencil" class="edit-button" (click)="openEditAccountDialog(account, i)"></button>
+              <button pButton icon="pi pi-trash" class="remove-button" (click)="removeAccount(i)"></button>
+            </div>
+          </div>
+          <button *ngIf="bankAccounts.length < 5" pButton label="Adicionar Conta" icon="pi pi-plus" class="add-account-button" (click)="openAddAccountDialog()"></button>
+        </div>
+      </p-card>
+    </div>
+
+    <!-- Third -->
+    <h2 class="card-title card-title-spaced">Métricas</h2>
     <div class="card flex justify-content-center mt-4">
       <p-card [style]="{ width: '360px'}">
-        <div class="flex justify-content-center align-items-center">
-          <div style="width: 50%; display: flex; justify-content: center;">
-            <p-chart type="doughnut" [data]="doughnutChartData" [options]="doughnutChartOptions" style="max-width: 150px;"></p-chart>
-          </div>
-          <div style="width: 50%; padding-left: 10px;">
-            <div *ngFor="let item of expenses" class="flex align-items-center mb-1 ml-5">
-              <div [style.background-color]="item.color" class="legend-color-box"></div>
-              <div class="ml-1">
-                <p class="legend-text">{{ item.title }}</p>
-                <p class="legend-text">{{ item.value }}</p>
+        <div class="flex flex-column align-items-center">
+          <div class="flex justify-content-center align-items-center">
+            <div style="width: 50%; display: flex; justify-content: center;">
+              <p-chart type="doughnut" [data]="doughnutChartData" [options]="doughnutChartOptions" style="max-width: 150px;"></p-chart>
+            </div>
+            <div style="width: 50%; padding-left: 10px;">
+              <div *ngFor="let item of expenses" class="flex align-items-center mb-3 ml-5">
+                <div [style.background-color]="item.color" class="legend-color-box"></div>
+                <div class="ml-4">
+                  <p class="legend-text">{{ item.title }}</p>
+                  <p class="legend-text">{{ item.value }}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -94,3 +83,23 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<p-dialog header="Adicionar Conta" [(visible)]="isDialogVisible" [modal]="true" [closable]="false" [style]="{ width: '90%', maxWidth: '400px' }">
+  <div class="p-fluid">
+    <div class="p-field">
+      <label for="bank">Banco</label>
+      <p-dropdown [options]="bankOptions" [(ngModel)]="dialogAccount.selectedBank" placeholder="Selecione um banco"></p-dropdown>
+    </div>
+    <div class="p-field">
+      <label for="balance">Saldo</label>
+      <input id="balance" type="number" [(ngModel)]="dialogAccount.balance" class="p-inputtext p-component" />
+    </div>
+  </div>
+  <p-footer>
+    <div class="flex justify-content-end">
+      <button pButton label="Salvar" icon="pi pi-check" (click)="saveAccount()"></button>
+      <button pButton label="Cancelar" icon="pi pi-times" class="ui-button-secondary" (click)="closeDialog()"></button>
+    </div>
+  </p-footer>
+</p-dialog>
