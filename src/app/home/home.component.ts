@@ -96,7 +96,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   bankAccounts: BankAccount[] = [];
 
   options: AnimationOptions = {
-    path: '../../assets/budget-loading.json', // caminho do arquivo Lottie
+    path: 'assets/budget-loading.json', // caminho do arquivo Lottie
   };
 
   private checkDataReadySubscription: Subscription | null = null;
