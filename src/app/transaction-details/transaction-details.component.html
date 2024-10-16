@@ -6,8 +6,8 @@
       <input pInputText id="value" type="number" [(ngModel)]="value" (input)="updateValue()" autocomplete="off" />
     </div>
     <div class="button-group">
-      <p-button label="Cancelar" severity="secondary" (onClick)="cancel()" class="cancel-button" size="large" />
       <p-button label="Salvar" (onClick)="saveTransaction()" class="save-button" size="large" />
+      <p-button label="Voltar" severity="secondary" (onClick)="cancel()" class="cancel-button" size="large" />
     </div>
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment.prod';
 
 interface BankOption {
   name: string;
@@ -137,7 +138,7 @@ export class HomeComponent implements OnInit {
 
   fetchBankAccounts() {
     console.log('Fetching bank accounts...');
-    this.http.get<BankAccount[]>('http://localhost:9992/api/bankAccounts').subscribe(accounts => {
+    this.http.get<BankAccount[]>(`${environment.apiUrl}/api/bankAccounts`  ).subscribe(accounts => {
       console.log('Bank accounts fetched:', accounts);
       this.bankAccounts = accounts;
     }, error => {
@@ -149,7 +150,7 @@ export class HomeComponent implements OnInit {
     if (this.selectedMonth) {
       const year = new Date().getFullYear(); // Assumindo o ano atual, você pode ajustar conforme necessário
       console.log(`Fetching monthly data for ${this.selectedMonth} ${year}`);
-      this.http.get<MonthlyData>(`http://localhost:9992/api/monthlyData?month=${this.selectedMonth}&year=${year}`).subscribe(data => {
+      this.http.get<MonthlyData>(`${environment.apiUrl}/api/monthlyData?month=${this.selectedMonth}&year=${year}`).subscribe(data => {
         console.log('Monthly data fetched:', data);
         this.totalBalance = data.totalBalance;
         this.monthlyIncome = data.monthlyIncome;
@@ -202,7 +203,7 @@ export class HomeComponent implements OnInit {
       const account = this.bankAccounts[index];
       console.log('Removing account:', account);
       this.bankAccounts.splice(index, 1);
-      this.http.delete(`http://localhost:9992/api/bankAccounts?name=${account.name}`).subscribe(() => {
+      this.http.delete(`${environment.apiUrl}/api/bankAccounts?name=${account.name}`).subscribe(() => {
         console.log('Account removed:', account);
       }, error => {
         console.error('Error removing account:', error);

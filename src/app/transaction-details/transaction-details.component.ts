@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-transaction-details',
@@ -34,7 +35,7 @@ export class TransactionDetailsComponent implements OnInit {
     const transaction = { type, category, value: this.value, year, month };
 
     console.log('Saving transaction:', transaction);
-    this.http.post('http://localhost:9992/api/transactions', transaction).subscribe(response => {
+    this.http.post(`${environment.apiUrl}/api/transactions`, transaction).subscribe(response => {
       console.log('Transaction saved:', response);
       this.router.navigate(['/']);
     }, error => {
