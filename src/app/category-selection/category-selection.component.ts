@@ -10,15 +10,15 @@ export class CategorySelectionComponent {
   categoryOptions = [
     { label: 'Alimentação', value: 'Alimentação' },
     { label: 'Transporte', value: 'Transporte' },
+    { label: 'Eletrônicos', value: 'Eletrônicos' },
     { label: 'Gasolina', value: 'Transporte' },
     { label: 'Pedagio', value: 'Transporte' },
-    { label: 'Lazer', value: 'Lazer' },
     { label: 'Cinema', value: 'Lazer' },
-    { label: 'Eletrônicos', value: 'Eletrônicos' },
     { label: 'Viagem', value: 'Viagem' },
     { label: 'Roupas', value: 'Vestuário' },
     { label: 'Salário', value: 'Salário' },
     { label: 'Fatura', value: 'Fatura' },
+    { label: 'Lazer', value: 'Lazer' },
   ];
 
   constructor(private router: Router) {}
