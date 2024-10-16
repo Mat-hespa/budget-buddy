@@ -19,6 +19,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DialogModule } from 'primeng/dialog';
+import { TransactionTypeComponent } from './transaction-type/transaction-type.component';
+import { CategorySelectionComponent } from './category-selection/category-selection.component';
+import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
 
 
 
@@ -26,7 +29,10 @@ import { DialogModule } from 'primeng/dialog';
   declarations: [
     AppComponent,
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,
+    TransactionTypeComponent,
+    CategorySelectionComponent,
+    TransactionDetailsComponent
   ],
   imports: [
     BrowserModule,

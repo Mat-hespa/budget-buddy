@@ -38,21 +38,13 @@ export class HomeComponent implements OnInit {
   isBalanceHidden = false;
   months: { label: string; value: string }[];
   selectedMonth: string | null = null;
-  isDialogVisible = false;
-  editIndex: number | null = null;
 
   totalBalance: number = 0;
   monthlyIncome: number = 0;
   monthlyExpenses: number = 0;
   expenses: { title: string; value: string; color: string, amount: number }[] = [];
 
-  isTransactionDialogVisible = false;
-  dialogTransaction = {
-    type: null as string | null,
-    description: '',
-    category: null as string | null,
-    value: null as number | null
-  };
+  showNoMetricsMessage = false;
 
   transactionTypeOptions = [
     { label: 'Despesa', value: 'despesa' },
@@ -63,7 +55,14 @@ export class HomeComponent implements OnInit {
     { label: 'Alimentação', value: 'Alimentação' },
     { label: 'Transporte', value: 'Transporte' },
     { label: 'Lazer', value: 'Lazer' },
-    { label: 'Educação', value: 'Educação' }
+    { label: 'Eletrônicos', value: 'Eletrônicos' },
+    { label: 'Gasolina', value: 'Transporte' },
+    { label: 'Pedagio', value: 'Transporte' },
+    { label: 'Viagem', value: 'Viagem' },
+    { label: 'Cinema', value: 'Lazer' },
+    { label: 'Roupas', value: 'Vestuário' },
+    { label: 'Salário', value: 'Salário' },
+    { label: 'Fatura', value: 'Fatura' },
   ];
 
   user = {
@@ -84,25 +83,16 @@ export class HomeComponent implements OnInit {
     datasets: [
       {
         data: [] as number[],
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+        backgroundColor: [
+          '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+          '#9966FF', '#FF9F40', '#FFCD56', '#4DC9F6',
+          '#F67019', '#F53794', '#537BC4', '#ECD078'
+        ]
       }
     ]
   };
 
   bankAccounts: BankAccount[] = [];
-
-  dialogAccount = {
-    selectedBank: null as BankOption | null,
-    balance: 0
-  };
-
-  bankOptions: { label: string; value: BankOption }[] = [
-    { label: 'Itaú', value: { name: 'Itaú', icon: 'pi pi-building' } },
-    { label: 'Bradesco', value: { name: 'Bradesco', icon: 'pi pi-building' } },
-    { label: 'Nubank', value: { name: 'Nubank', icon: 'pi pi-mobile' } },
-    { label: 'Mercado Pago', value: { name: 'Mercado Pago', icon: 'pi pi-wallet' } },
-    { label: 'Banco do Brasil', value: { name: 'Banco do Brasil', icon: 'pi pi-globe' } }
-  ];
 
   constructor(private router: Router, private http: HttpClient) {
     this.months = [
@@ -123,6 +113,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.fetchBankAccounts();
+    this.setDefaultMonth();
+    this.fetchMonthlyData();
+  }
+
+  setDefaultMonth() {
+    const currentMonthIndex = new Date().getMonth(); // Obter o índice do mês atual (0-11)
+    this.selectedMonth = this.months[currentMonthIndex].value;
+    localStorage.setItem('selectedMonth', this.selectedMonth); // Salvar o mês selecionado no localStorage
   }
 
   toggleBalanceVisibility() {
@@ -131,6 +129,10 @@ export class HomeComponent implements OnInit {
 
   navigateToProfile() {
     this.router.navigate(['/profile']);
+  }
+
+  navigateToAddTransaction() {
+    this.router.navigate(['/transactionType']);
   }
 
   fetchBankAccounts() {
@@ -164,98 +166,35 @@ export class HomeComponent implements OnInit {
 
         // Necessário para forçar a atualização do gráfico
         this.doughnutChartData = { ...this.doughnutChartData };
+
+        // Verificar se há despesas, se não, usar um gráfico padrão
+        if (this.expenses.length === 0) {
+          this.showNoMetricsMessage = true;
+        } else {
+          this.showNoMetricsMessage = false;
+        }
       }, error => {
         console.error('Error fetching monthly data:', error);
       });
     } else {
       console.warn('No month selected, skipping fetchMonthlyData');
+      this.showNoMetricsMessage = true;
     }
   }
 
   onMonthChange(event: any) {
     console.log('Month changed:', event.value);
     this.selectedMonth = event.value;
+    localStorage.setItem('selectedMonth', event.value); // Salvar o mês selecionado no localStorage
     this.fetchMonthlyData();
   }
 
-  openTransactionDialog() {
-    this.isTransactionDialogVisible = true;
-  }
-
-  closeTransactionDialog() {
-    this.isTransactionDialogVisible = false;
-    this.dialogTransaction = {
-      type: null,
-      description: '',
-      category: null,
-      value: null
-    };
-  }
-
-  saveTransaction() {
-    if (!this.selectedMonth) {
-      console.error('No month selected, cannot save transaction');
-      return;
-    }
-
-    const year = new Date().getFullYear(); // Assumindo o ano atual, você pode ajustar conforme necessário
-    const transaction = { ...this.dialogTransaction, month: this.selectedMonth, year };
-    console.log('Saving transaction:', transaction);
-    this.http.post('http://localhost:9992/api/transactions', transaction).subscribe(response => {
-      console.log('Transaction saved:', response);
-      this.fetchMonthlyData();
-      this.closeTransactionDialog();
-    }, error => {
-      console.error('Error saving transaction:', error);
-    });
-  }
-
   openAddAccountDialog() {
-    this.dialogAccount = { selectedBank: null, balance: 0 };
-    this.isDialogVisible = true;
-    this.editIndex = null;
+    this.router.navigate(['/add-bank-account']);
   }
 
   openEditAccountDialog(account: BankAccount, index: number) {
-    this.dialogAccount = {
-      selectedBank: this.bankOptions.find(option => option.value.name === account.name)?.value || null,
-      balance: account.balance
-    };
-    this.isDialogVisible = true;
-    this.editIndex = index;
-  }
-
-  saveAccount() {
-    if (this.dialogAccount.selectedBank) {
-      const newAccount: BankAccount = {
-        name: this.dialogAccount.selectedBank.name,
-        balance: this.dialogAccount.balance,
-        icon: this.dialogAccount.selectedBank.icon
-      };
-
-      console.log('Saving account:', newAccount);
-      if (this.editIndex !== null && this.editIndex >= 0) {
-        this.bankAccounts[this.editIndex] = newAccount;
-        this.http.put('http://localhost:9992/api/bankAccounts', newAccount).subscribe(() => {
-          console.log('Account updated:', newAccount);
-          this.isDialogVisible = false;
-        }, error => {
-          console.error('Error updating account:', error);
-        });
-      } else {
-        this.bankAccounts.push(newAccount);
-        this.http.post('http://localhost:9992/api/bankAccounts', newAccount).subscribe(() => {
-          console.log('Account created:', newAccount);
-          this.isDialogVisible = false;
-        }, error => {
-          console.error('Error creating account:', error);
-        });
-      }
-    }
-  }
-
-  closeDialog() {
-    this.isDialogVisible = false;
+    this.router.navigate(['/edit-bank-account'], { state: { account, index } });
   }
 
   removeAccount(index: number) {

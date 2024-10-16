@@ -1,0 +1,8 @@
+<div class="page-container">
+  <div class="content">
+    <h2 class="page-title">Selecione a Categoria</h2>
+    <div class="category-group">
+      <p-button *ngFor="let category of categoryOptions" [label]="category.label" (onClick)="selectCategory(category.value)" class="category-button"></p-button>
+    </div>
+  </div>
+</div>

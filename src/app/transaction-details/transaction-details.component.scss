@@ -1,0 +1,70 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: #f4f4f4;
+}
+
+.content {
+  text-align: center;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.value-display {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.input-container {
+  margin-bottom: 30px;
+}
+
+.input-container input {
+  font-size: 2rem;
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 500px;
+}
+
+.cancel-button {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.save-button {
+  flex: 1;
+  margin-left: 10px;
+}
+
+@media (max-width: 600px) {
+  .value-display {
+    font-size: 3rem;
+  }
+
+  .input-container input {
+    font-size: 1.5rem;
+  }
+
+  .cancel-button, .save-button {
+    margin: 10px 0;
+  }
+}
