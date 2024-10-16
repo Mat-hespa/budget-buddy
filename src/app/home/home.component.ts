@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit {
   expenses: { title: string; value: string; color: string, amount: number }[] = [];
 
   showNoMetricsMessage = false;
+  isLoading: boolean = true;
 
   transactionTypeOptions = [
     { label: 'Despesa', value: 'despesa' },
@@ -137,8 +138,10 @@ export class HomeComponent implements OnInit {
     this.http.get<BankAccount[]>(`${environment.apiUrl}/api/bankAccounts`).subscribe(accounts => {
       console.log('Bank accounts fetched:', accounts);
       this.bankAccounts = accounts;
+      this.isLoading = false;
     }, error => {
       console.error('Error fetching bank accounts:', error);
+      this.isLoading = false;
     });
   }
 
@@ -171,12 +174,15 @@ export class HomeComponent implements OnInit {
         } else {
           this.showNoMetricsMessage = false;
         }
+        this.isLoading = false;
       }, error => {
         console.error('Error fetching monthly data:', error);
+        this.isLoading = false;
       });
     } else {
       console.warn('No month selected, skipping fetchMonthlyData');
       this.showNoMetricsMessage = true;
+      this.isLoading = false;
     }
   }
 

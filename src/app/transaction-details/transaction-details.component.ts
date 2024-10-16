@@ -12,6 +12,7 @@ export class TransactionDetailsComponent implements OnInit {
   value: number | null = null;
   formattedValue: string = 'R$ 0,00';
   selectedMonth: string | null = null;
+  isLoading: boolean = false;
 
   constructor(private router: Router, private http: HttpClient) {}
 
@@ -28,6 +29,7 @@ export class TransactionDetailsComponent implements OnInit {
   }
 
   saveTransaction() {
+    this.isLoading = true;
     const type = localStorage.getItem('transactionType');
     const category = localStorage.getItem('transactionCategory');
     const year = new Date().getFullYear();
@@ -37,9 +39,11 @@ export class TransactionDetailsComponent implements OnInit {
     console.log('Saving transaction:', transaction);
     this.http.post(`${environment.apiUrl}/api/transactions`, transaction).subscribe(response => {
       console.log('Transaction saved:', response);
+      this.isLoading = false;
       this.router.navigate(['/']);
     }, error => {
       console.error('Error saving transaction:', error);
+      this.isLoading = false;
     });
   }
 

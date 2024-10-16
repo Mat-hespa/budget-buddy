@@ -22,7 +22,7 @@ import { DialogModule } from 'primeng/dialog';
 import { TransactionTypeComponent } from './transaction-type/transaction-type.component';
 import { CategorySelectionComponent } from './category-selection/category-selection.component';
 import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
-
+import { SkeletonModule } from 'primeng/skeleton';
 
 
 @NgModule({
@@ -32,7 +32,7 @@ import { TransactionDetailsComponent } from './transaction-details/transaction-d
     ProfileComponent,
     TransactionTypeComponent,
     CategorySelectionComponent,
-    TransactionDetailsComponent
+    TransactionDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +49,7 @@ import { TransactionDetailsComponent } from './transaction-details/transaction-d
     FormsModule,
     HttpClientModule,
     DialogModule,
+    SkeletonModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
