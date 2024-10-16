@@ -23,6 +23,13 @@ import { TransactionTypeComponent } from './transaction-type/transaction-type.co
 import { CategorySelectionComponent } from './category-selection/category-selection.component';
 import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
 import { SkeletonModule } from 'primeng/skeleton';
+import { LottieComponent, provideLottieOptions } from 'ngx-lottie';
+import player from 'lottie-web';
+
+// Export this factory to be used by ngx-lottie
+export function playerFactory() {
+  return player;
+}
 
 
 @NgModule({
@@ -50,6 +57,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     HttpClientModule,
     DialogModule,
     SkeletonModule,
+    LottieComponent,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
@@ -57,8 +65,12 @@ import { SkeletonModule } from 'primeng/skeleton';
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],
-  providers: [],
+  providers: [
+    provideLottieOptions({
+      player: playerFactory,
+    }),
+  ],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }

@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
+import { AnimationOptions } from 'ngx-lottie';
+import { Subscription, interval } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 interface BankOption {
   name: string;
@@ -34,10 +37,10 @@ interface MonthlyData {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   isTotalBalanceHidden = false;
   isBalanceHidden = false;
-  months: { label: string; value: string }[];
+  months: { label: string; value: string }[] = [];
   selectedMonth: string | null = null;
 
   totalBalance: number = 0;
@@ -92,6 +95,12 @@ export class HomeComponent implements OnInit {
 
   bankAccounts: BankAccount[] = [];
 
+  options: AnimationOptions = {
+    path: '../../assets/budget-loading.json', // caminho do arquivo Lottie
+  };
+
+  private checkDataReadySubscription: Subscription | null = null;
+
   constructor(private router: Router, private http: HttpClient) {
     this.months = [
       { label: 'Janeiro', value: 'Janeiro' },
@@ -110,9 +119,29 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetchBankAccounts();
-    this.setDefaultMonth();
-    this.fetchMonthlyData();
+    this.checkDataReadySubscription = interval(3000) // Checar a cada 3 segundos
+      .pipe(
+        switchMap(() => this.http.get<{ dataReady: boolean }>(`${environment.apiUrl}/api/checkDataReady`))
+      )
+      .subscribe(response => {
+        if (response.dataReady) {
+          this.isLoading = false;
+          this.fetchBankAccounts();
+          this.setDefaultMonth();
+          this.fetchMonthlyData();
+          if (this.checkDataReadySubscription) {
+            this.checkDataReadySubscription.unsubscribe();
+          }
+        }
+      }, error => {
+        console.error('Error checking data readiness:', error);
+      });
+  }
+
+  ngOnDestroy() {
+    if (this.checkDataReadySubscription) {
+      this.checkDataReadySubscription.unsubscribe();
+    }
   }
 
   setDefaultMonth() {

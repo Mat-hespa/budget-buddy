@@ -1,15 +1,15 @@
-<div class="page-container">
+<div *ngIf="isLoading" class="loading-container">
+  <ng-lottie [options]="options" width="200" height="200"></ng-lottie>
+</div>
+
+<div *ngIf="!isLoading" class="page-container">
   <!-- Main Content -->
   <div class="content">
     <!-- First Card: Saldo em Contas -->
     <div class="header-container">
       <h2 class="card-title">Gasto Mensal</h2>
       <div class="user-profile" (click)="navigateToProfile()">
-        <!-- <img
-          src="../../assets/sushimares.jpeg"
-          alt="User Profile"
-          class="profile-picture"
-        /> -->
+        <!-- <img src="../../assets/sushimares.jpeg" alt="User Profile" class="profile-picture" /> -->
       </div>
     </div>
     <div class="card flex justify-content-center">
@@ -43,14 +43,7 @@
     </div>
 
     <div class="button-container">
-      <button
-        pButton
-        label="Adicionar Despesa/Receita"
-        icon="pi pi-plus"
-        outlined="true"
-        (click)="navigateToAddTransaction()"
-        style="color: black; border: 0;"
-      ></button>
+      <button pButton label="Adicionar Despesa/Receita" icon="pi pi-plus" outlined="true" (click)="navigateToAddTransaction()" style="color: black; border: 0;"></button>
     </div>
 
     <!-- Second Card: Contas Bancárias -->
