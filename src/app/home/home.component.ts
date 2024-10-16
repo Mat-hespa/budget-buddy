@@ -55,12 +55,12 @@ export class HomeComponent implements OnInit {
   categoryOptions = [
     { label: 'Alimentação', value: 'Alimentação' },
     { label: 'Transporte', value: 'Transporte' },
-    { label: 'Lazer', value: 'Lazer' },
-    { label: 'Eletrônicos', value: 'Eletrônicos' },
     { label: 'Gasolina', value: 'Transporte' },
     { label: 'Pedagio', value: 'Transporte' },
-    { label: 'Viagem', value: 'Viagem' },
+    { label: 'Lazer', value: 'Lazer' },
     { label: 'Cinema', value: 'Lazer' },
+    { label: 'Eletrônicos', value: 'Eletrônicos' },
+    { label: 'Viagem', value: 'Viagem' },
     { label: 'Roupas', value: 'Vestuário' },
     { label: 'Salário', value: 'Salário' },
     { label: 'Fatura', value: 'Fatura' },
@@ -84,11 +84,7 @@ export class HomeComponent implements OnInit {
     datasets: [
       {
         data: [] as number[],
-        backgroundColor: [
-          '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-          '#9966FF', '#FF9F40', '#FFCD56', '#4DC9F6',
-          '#F67019', '#F53794', '#537BC4', '#ECD078'
-        ]
+        backgroundColor: [] as string[]
       }
     ]
   };
@@ -138,7 +134,7 @@ export class HomeComponent implements OnInit {
 
   fetchBankAccounts() {
     console.log('Fetching bank accounts...');
-    this.http.get<BankAccount[]>(`${environment.apiUrl}/api/bankAccounts`  ).subscribe(accounts => {
+    this.http.get<BankAccount[]>(`${environment.apiUrl}/api/bankAccounts`).subscribe(accounts => {
       console.log('Bank accounts fetched:', accounts);
       this.bankAccounts = accounts;
     }, error => {
@@ -157,13 +153,14 @@ export class HomeComponent implements OnInit {
         this.monthlyExpenses = data.monthlyExpenses;
         this.expenses = data.expenses.map((expense: Expense) => ({
           title: expense.category,
-          value: `R$ ${expense.amount}`,
-          color: this.doughnutChartData.datasets[0].backgroundColor[this.categoryOptions.findIndex(option => option.label === expense.category)],
+          value: `R$ ${expense.amount.toFixed(2)}`,
+          color: categoryColorMapping[expense.category] || '#000000', // cor padrão para categorias desconhecidas
           amount: expense.amount
         }));
 
         this.doughnutChartData.labels = this.expenses.map(expense => expense.title);
         this.doughnutChartData.datasets[0].data = this.expenses.map(expense => expense.amount);
+        this.doughnutChartData.datasets[0].backgroundColor = this.expenses.map(expense => expense.color);
 
         // Necessário para forçar a atualização do gráfico
         this.doughnutChartData = { ...this.doughnutChartData };
@@ -211,3 +208,17 @@ export class HomeComponent implements OnInit {
     }
   }
 }
+
+const categoryColorMapping: { [key: string]: string } = {
+  'Alimentação': '#FF6384',
+  'Transporte': '#36A2EB',
+  'Gasolina': '#36A2EB', // mesma cor para Transporte
+  'Pedagio': '#36A2EB',  // mesma cor para Transporte
+  'Lazer': '#9966FF',
+  'Cinema': '#9966FF', // mesma cor para Lazer
+  'Eletrônicos': '#FFCD56',
+  'Viagem': '#4DC9F6',
+  'Roupas': '#F67019',
+  'Salário': '#F53794',
+  'Fatura': '#537BC4',
+};

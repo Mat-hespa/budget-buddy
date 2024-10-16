@@ -9,11 +9,13 @@ import { Router } from '@angular/router';
 export class CategorySelectionComponent {
   categoryOptions = [
     { label: 'Alimentação', value: 'Alimentação' },
-    { label: 'Eletrônicos', value: 'Eletrônicos' },
+    { label: 'Transporte', value: 'Transporte' },
     { label: 'Gasolina', value: 'Transporte' },
     { label: 'Pedagio', value: 'Transporte' },
-    { label: 'Viagem', value: 'Viagem' },
+    { label: 'Lazer', value: 'Lazer' },
     { label: 'Cinema', value: 'Lazer' },
+    { label: 'Eletrônicos', value: 'Eletrônicos' },
+    { label: 'Viagem', value: 'Viagem' },
     { label: 'Roupas', value: 'Vestuário' },
     { label: 'Salário', value: 'Salário' },
     { label: 'Fatura', value: 'Fatura' },
