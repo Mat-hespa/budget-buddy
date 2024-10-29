@@ -1,8 +1,4 @@
-<div *ngIf="isLoading" class="loading-container">
-  <ng-lottie [options]="options" width="200" height="200"></ng-lottie>
-</div>
-
-<div *ngIf="!isLoading" class="page-container">
+<div class="page-container">
   <!-- Main Content -->
   <div class="content">
     <!-- First Card: Saldo em Contas -->
@@ -62,7 +58,7 @@
               <button pButton icon="pi pi-trash" class="remove-button" (click)="removeAccount(i)" style="color: red"></button>
             </div>
           </div>
-          <button pButton *ngIf="bankAccounts.length < 5" label="Adicionar Conta" icon="pi pi-plus" badgeClass="p-badge-contrast" outlined="true" (click)="openAddAccountDialog()" style="color: black; border: 0;"></button>
+          <button pButton *ngIf="bankAccounts.length < 5" label="Adicionar Conta (futuro)" icon="pi pi-plus" badgeClass="p-badge-contrast" outlined="true" (click)="openAddAccountDialog()" style="color: black; border: 0;"></button>
         </div>
       </p-card>
     </div>

@@ -25,7 +25,7 @@ export class TransactionDetailsComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
 
   saveTransaction() {
@@ -40,7 +40,7 @@ export class TransactionDetailsComponent implements OnInit {
     this.http.post(`${environment.apiUrl}/api/transactions`, transaction).subscribe(response => {
       console.log('Transaction saved:', response);
       this.isLoading = false;
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
     }, error => {
       console.error('Error saving transaction:', error);
       this.isLoading = false;

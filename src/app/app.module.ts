@@ -25,6 +25,7 @@ import { TransactionDetailsComponent } from './transaction-details/transaction-d
 import { SkeletonModule } from 'primeng/skeleton';
 import { LottieComponent, provideLottieOptions } from 'ngx-lottie';
 import player from 'lottie-web';
+import { LoadingScreenComponent } from './loading-screen/loading-screen.component';
 
 // Export this factory to be used by ngx-lottie
 export function playerFactory() {
@@ -40,6 +41,7 @@ export function playerFactory() {
     TransactionTypeComponent,
     CategorySelectionComponent,
     TransactionDetailsComponent,
+    LoadingScreenComponent
   ],
   imports: [
     BrowserModule,

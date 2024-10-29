@@ -1,16 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
-import { AnimationOptions } from 'ngx-lottie';
-import { Subscription, interval } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-
-interface BankOption {
-  name: string;
-  icon: string;
-}
-
 interface BankAccount {
   name: string;
   balance: number;
@@ -37,7 +28,7 @@ interface MonthlyData {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
   isTotalBalanceHidden = false;
   isBalanceHidden = false;
   months: { label: string; value: string }[] = [];
@@ -49,7 +40,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   expenses: { title: string; value: string; color: string, amount: number }[] = [];
 
   showNoMetricsMessage = false;
-  isLoading: boolean = true;
 
   transactionTypeOptions = [
     { label: 'Despesa', value: 'despesa' },
@@ -95,12 +85,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   bankAccounts: BankAccount[] = [];
 
-  options: AnimationOptions = {
-    path: 'assets/budget-loading.json', // caminho do arquivo Lottie
-  };
-
-  private checkDataReadySubscription: Subscription | null = null;
-
   constructor(private router: Router, private http: HttpClient) {
     this.months = [
       { label: 'Janeiro', value: 'Janeiro' },
@@ -119,29 +103,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.checkDataReadySubscription = interval(3000) // Checar a cada 3 segundos
-      .pipe(
-        switchMap(() => this.http.get<{ dataReady: boolean }>(`${environment.apiUrl}/api/checkDataReady`))
-      )
-      .subscribe(response => {
-        if (response.dataReady) {
-          this.isLoading = false;
-          this.fetchBankAccounts();
-          this.setDefaultMonth();
-          this.fetchMonthlyData();
-          if (this.checkDataReadySubscription) {
-            this.checkDataReadySubscription.unsubscribe();
-          }
-        }
-      }, error => {
-        console.error('Error checking data readiness:', error);
-      });
-  }
-
-  ngOnDestroy() {
-    if (this.checkDataReadySubscription) {
-      this.checkDataReadySubscription.unsubscribe();
-    }
+    this.fetchBankAccounts();
+    this.setDefaultMonth();
+    this.fetchMonthlyData();
   }
 
   setDefaultMonth() {
@@ -167,10 +131,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.http.get<BankAccount[]>(`${environment.apiUrl}/api/bankAccounts`).subscribe(accounts => {
       console.log('Bank accounts fetched:', accounts);
       this.bankAccounts = accounts;
-      this.isLoading = false;
     }, error => {
       console.error('Error fetching bank accounts:', error);
-      this.isLoading = false;
     });
   }
 
@@ -203,15 +165,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         } else {
           this.showNoMetricsMessage = false;
         }
-        this.isLoading = false;
       }, error => {
         console.error('Error fetching monthly data:', error);
-        this.isLoading = false;
       });
     } else {
       console.warn('No month selected, skipping fetchMonthlyData');
       this.showNoMetricsMessage = true;
-      this.isLoading = false;
     }
   }
 
